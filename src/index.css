@@ -699,19 +699,33 @@ body {
 }
 
 /* ─── Print Styles ─── */
+@page {
+  size: A4;
+  margin: 0;
+}
+
 @media print {
   body {
     background: white;
     overflow: visible;
   }
 
+  #root,
+  .app-layout {
+    overflow: visible;
+    height: auto;
+    display: block;
+  }
+
+  .mobile-toggle,
+  .panel-form,
   .form-panel,
   .actions-bar {
     display: none !important;
   }
 
-  .app-layout {
-    display: block;
+  .panel-preview {
+    display: block !important;
   }
 
   .preview-panel {
