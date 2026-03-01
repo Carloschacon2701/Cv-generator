@@ -67,6 +67,7 @@ const initialState = {
 
 function App() {
   const [cvData, setCvData] = useState(initialState)
+  const [mobileView, setMobileView] = useState('form')
 
   const updateField = useCallback((section, value) => {
     setCvData(prev => ({ ...prev, [section]: value }))
@@ -89,14 +90,32 @@ function App() {
 
   return (
     <div className="app-layout">
-      <FormPanel
-        cvData={cvData}
-        updateField={updateField}
-        updatePersonalInfo={updatePersonalInfo}
-        clearAll={clearAll}
-        onExportPDF={handleExportPDF}
-      />
-      <PreviewPanel cvData={cvData} />
+      <div className="mobile-toggle">
+        <button
+          className={`mobile-toggle-btn ${mobileView === 'form' ? 'active' : ''}`}
+          onClick={() => setMobileView('form')}
+        >
+          ✏️ Edit
+        </button>
+        <button
+          className={`mobile-toggle-btn ${mobileView === 'preview' ? 'active' : ''}`}
+          onClick={() => setMobileView('preview')}
+        >
+          👁️ Preview
+        </button>
+      </div>
+      <div className={`panel-form ${mobileView === 'form' ? 'mobile-visible' : 'mobile-hidden'}`}>
+        <FormPanel
+          cvData={cvData}
+          updateField={updateField}
+          updatePersonalInfo={updatePersonalInfo}
+          clearAll={clearAll}
+          onExportPDF={handleExportPDF}
+        />
+      </div>
+      <div className={`panel-preview ${mobileView === 'preview' ? 'mobile-visible' : 'mobile-hidden'}`}>
+        <PreviewPanel cvData={cvData} />
+      </div>
     </div>
   )
 }
